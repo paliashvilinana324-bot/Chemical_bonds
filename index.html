@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ქიმიური ბმები და ნივთიერებათა აღნაგობა | ესგ IX-XI კლასი</title>
+  <meta name="description" content="ინტერაქტიული საგანმანათლებლო პლატფორმა ქიმიური ბმებისა და ნივთიერებათა აღნაგობის შესასწავლად საქართველოს ეროვნული სასწავლო გეგმის მიხედვით (IX–XI კლასები).">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= HEADER & SCAFFOLDING NAVIGATION ================= -->
+  <header class="app-header">
+    <div class="header-container">
+      
+      <!-- Brand & Title -->
+      <div class="brand-section">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 12c0-1.66 4-3 9-3s9 1.34 9 3"></path>
+            <path d="M12 3c1.66 0 3 4 3 9s-1.34 9-3 9"></path>
+            <path d="M12 3c-1.66 0-3 4-3 9s1.34 9 3 9"></path>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <h1>
+            ქიმიური ბმები და ნივთიერებათა აღნაგობა
+            <span class="curriculum-badge">ესგ სტანდარტი</span>
+          </h1>
+          <p>ინტერაქტიული სიმულატორი და ვიზუალური ლაბორატორია (IX–XI კლასი)</p>
+        </div>
+      </div>
+
+      <!-- Scaffolding Toggle: Grade 9 vs Grade 10-11 -->
+      <div class="grade-scaffold-toggle" role="group" aria-label="სწავლების დონე">
+        <button id="btn-grade-9" class="active" title="საბაზო საფეხური: ოქტეტის წესი, ელექტრონების გადაცემა და გაზიარება">
+          <span>🎓 IX კლასი (საბაზო)</span>
+        </button>
+        <button id="btn-grade-10" title="საშუალო საფეხური: ΔEN, ორბიტალების σ/π გადაფარვა, პოლარობა და მესრის ფიზიკა">
+          <span>🔬 X–XI კლასი (გაღრმავებული)</span>
+        </button>
+      </div>
+
+      <!-- Quick Action Modals Trigger -->
+      <div class="header-controls">
+        <button class="btn-icon-label" id="btn-open-ptable" title="პერიოდული სისტემის ცნობარი">
+          <span>📊 პერიოდული ცხრილი</span>
+        </button>
+        <button class="btn-icon-label" id="btn-open-safety" title="უსაფრთხოების წესები და მონაცემთა ეთიკა">
+          <span>🛡️ უსაფრთხოება</span>
+        </button>
+        <button class="btn-icon-label" id="btn-sound-toggle" title="ხმოვანი ეფექტების ჩართვა/გამორთვა">
+          <span id="sound-icon">🔊</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= MODULE TAB NAVIGATION ================= -->
+  <nav class="module-nav-bar" aria-label="მოდულების ნავიგაცია">
+    <div class="nav-container">
+      <button class="tab-btn active" data-tab="module-builder">
+        <span>🧪 1. ბმის წარმოქმნის ლაბორატორია</span>
+        <span class="tab-badge">Canvas Sandbox</span>
+      </button>
+      <button class="tab-btn" data-tab="module-deep-covalent">
+        <span>⚛️ 2. კოვალენტური ბმის ანალიზი</span>
+        <span class="tab-badge">σ/π & პოლარობა</span>
+      </button>
+      <button class="tab-btn" data-tab="module-lattices">
+        <span>💎 3. კრისტალური მესრები</span>
+        <span class="tab-badge">დარტყმა & გაცხელება</span>
+      </button>
+      <button class="tab-btn" data-tab="module-quiz">
+        <span>📝 4. ინტერაქტიული ქვიზი</span>
+        <span class="tab-badge">ესგ ამოცანები</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN VIEWPORT ================= -->
+  <main class="main-viewport">
+
+    <!-- ========================================================
+         MODULE 1: ბმის წარმოქმნის ლაბორატორია (Bond Builder)
+         ======================================================== -->
+    <section id="module-builder" class="module-view active">
+      
+      <!-- Contextual Lab Safety Reminder -->
+      <div class="safety-banner" id="module1-safety">
+        <div class="safety-text">
+          <span class="safety-icon">⚠️</span>
+          <div>
+            <strong>ლაბორატორიული უსაფრთხოება:</strong> ტუტე მეტალების (Na) ურთიერთქმედება არამეტალებთან (Cl₂) მიმდინარეობს ძლიერი ეგზოთერმული ეფექტით (აალება, სითბოს გამოყოფა). რეალურ ლაბორატორიაში აუცილებელია გამწოვი კარადა და დამცავი სათვალე!
+          </div>
+        </div>
+        <button class="btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="openSafetyModal()">დეტალურად</button>
+      </div>
+
+      <div class="grid-2col">
+        
+        <!-- Left Column: Atom Palette & Controls -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">⚛️ ატომების შერჩევა</div>
+              <div class="panel-subtitle">აირჩიეთ ორი ატომი ბმის წარმოსაქმნელად</div>
+            </div>
+            <span class="curriculum-badge" id="m1-badge-level">IX კლასი</span>
+          </div>
+
+          <!-- Atom Selection Visual Indicator -->
+          <div class="selection-slots">
+            <div class="atom-slot slot-left">
+              <div class="slot-label">ატომი A (მარცხენა)</div>
+              <div class="slot-value" id="slot-a-symbol">Na</div>
+              <div class="slot-sub" id="slot-a-sub">ნატრიუმი (EN: 0.93)</div>
+            </div>
+            <div class="plus-divider">+</div>
+            <div class="atom-slot slot-right">
+              <div class="slot-label">ატომი B (მარჯვენა)</div>
+              <div class="slot-value" id="slot-b-symbol">Cl</div>
+              <div class="slot-sub" id="slot-b-sub">ქლორი (EN: 3.16)</div>
+            </div>
+          </div>
+
+          <!-- Interactive Mini Periodic Palette -->
+          <div class="periodic-mini-grid" id="atoms-palette">
+            <!-- Injected by JS: Na, Cl, H, O, N, C, Mg, F, Fe -->
+          </div>
+
+          <!-- Preset Reaction Pairs -->
+          <div class="preset-section">
+            <div class="panel-subtitle"><strong>სწრაფი საილუსტრაციო ქეისები:</strong></div>
+            <div class="preset-pills">
+              <button class="preset-pill" data-pair="Na,Cl">🧂 NaCl (იონური)</button>
+              <button class="preset-pill" data-pair="Mg,O">⚪ MgO (იონური)</button>
+              <button class="preset-pill" data-pair="H,H">💧 H₂ (არაპოლარული)</button>
+              <button class="preset-pill" data-pair="H,Cl">🧪 HCl (პოლარული)</button>
+              <button class="preset-pill" data-pair="O,O">🫧 O₂ (ორმაგი არაპოლ.)</button>
+              <button class="preset-pill" data-pair="N,N">💨 N₂ (სამმაგი არაპოლ.)</button>
+              <button class="preset-pill" data-pair="Fe,Fe">🔩 Fe-Fe (მეტალური)</button>
+            </div>
+          </div>
+
+          <!-- Dynamic Chemical Analysis Summary Box -->
+          <div class="pedagogy-card" style="margin-top: 1.25rem;">
+            <div class="pedagogy-header">
+              <span>🔍 ქიმიური პროგნოზი</span>
+            </div>
+            <div class="pedagogy-body" id="m1-prediction-text">
+              იტვირთება ანალიზი...
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive Canvas Simulation -->
+        <div class="simulation-container">
+          
+          <div class="canvas-wrapper">
+            <canvas id="builder-canvas" class="interactive-canvas" width="800" height="480"></canvas>
+            
+            <!-- Floating Heads-Up Display (HUD) -->
+            <div class="canvas-hud">
+              <div class="hud-panel">
+                <div class="hud-title">ელექტროუარყოფითობის სხვაობა (ΔEN)</div>
+                <div class="hud-value" id="hud-delta-en">ΔEN = 2.23</div>
+                <div class="hud-badge ionic" id="hud-bond-type">იონური ბმა</div>
+              </div>
+
+              <div class="hud-panel" style="text-align: right;">
+                <div class="hud-title">ოქტეტის მდგომარეობა</div>
+                <div id="hud-octet-status" style="font-size: 0.82rem; color: #a7f3d0; margin-top: 3px;">
+                  Na⁺: [2,8] დასრულებული | Cl⁻: [2,8,8] ოქტეტი
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation Toolbar -->
+          <div class="sim-controls-bar">
+            
+            <!-- Distance Slider -->
+            <div class="control-slider-group">
+              <label for="atom-distance-slider">🔬 ატომებს შორის მანძილი:</label>
+              <input type="range" id="atom-distance-slider" min="70" max="320" value="280">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="btn-group">
+              <button class="btn-action" id="btn-react-animate">
+                <span>⚡ ბმის ფორმირება</span>
+              </button>
+              <button class="btn-secondary" id="btn-reset-atoms">
+                <span>🔄 განცალკევება</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Scaffolded Conceptual Explanation for Grade 9 vs 10-11 -->
+          <div class="glass-panel" style="padding: 1rem 1.25rem;">
+            <div class="panel-title" style="font-size: 0.95rem; margin-bottom: 0.5rem;">
+              <span>💡 საგანმანათლებლო მინიშნება (ესგ სტანდარტი)</span>
+            </div>
+            <p id="m1-scaffold-explanation" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+              <strong>ოქტეტის წესი:</strong> ატომები მიისწრაფვიან, გარე ელექტრონულ შრეზე მიიღონ ინერტული აირის მსგავსი მდგრადი 8-ელექტრონიანი კონფიგურაცია (წყალბადისთვის 2 - დუბლეტი).
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         MODULE 2: კოვალენტური ბმის სიღრმისეული ანალიზი (Deep Dive)
+         ======================================================== -->
+    <section id="module-deep-covalent" class="module-view">
+      
+      <div class="covalent-deep-grid">
+        
+        <!-- Left: Bond Multiplicity & Sigma/Pi Overlap Visualizer -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🧬 ბმის ჯერადობა და ორბიტალების გადაფარვა</div>
+              <div class="panel-subtitle">ერთმაგი, ორმაგი და სამმაგი ბმები (X-XI კლასი)</div>
+            </div>
+          </div>
+
+          <!-- Molecule Selector -->
+          <div class="molecule-selector-bar">
+            <button class="mol-pill-btn active" data-mol="H2">💧 H₂ (ერთმაგი)</button>
+            <button class="mol-pill-btn" data-mol="O2">🫧 O₂ (ორმაგი)</button>
+            <button class="mol-pill-btn" data-mol="N2">💨 N₂ (სამმაგი)</button>
+            <button class="mol-pill-btn" data-mol="CH4">🔥 CH₄ (ტეტრაედრი)</button>
+          </div>
+
+          <!-- Canvas for Sigma/Pi Overlap -->
+          <div class="canvas-wrapper" style="height: 300px;">
+            <canvas id="orbitals-canvas" width="600" height="300"></canvas>
+          </div>
+
+          <!-- Quantitative Bond Metrics -->
+          <div class="metrics-row">
+            <div class="metric-box">
+              <div class="metric-label">ბმის ტიპი & ჯერადობა</div>
+              <div class="metric-val" id="metric-multiplicity">1 (ერთმაგი)</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">ბმის სიგრძე</div>
+              <div class="metric-val" id="metric-length">74 pm</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">ბმის ენერგია</div>
+              <div class="metric-val" id="metric-energy">436 კჯ/მოლ</div>
+            </div>
+          </div>
+
+          <!-- Detailed Orbital Breakdown -->
+          <div class="pedagogy-card" style="margin-top: 1rem;">
+            <div class="pedagogy-header">
+              <span>📐 ორბიტალების ანალიზი</span>
+            </div>
+            <div class="pedagogy-body" id="metric-orbital-desc">
+              H₂-ის მოლეკულაში ორი 1s ორბიტალი გადაიფარება ბირთვების შემაერთებელი ღერძის გასწვრივ. წარმოიქმნება ერთი მტკიცე <strong>σ (სიგმა) ბმა</strong>.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Molecular Polarity & Dipole Moments (H2O vs CO2) -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">🧭 მოლეკულის გეომეტრია და პოლარობა</div>
+              <div class="panel-subtitle">რატომ არის H₂O პოლარული, ხოლო CO₂ — არაპოლარული?</div>
+            </div>
+          </div>
+
+          <!-- Geometry Toggle -->
+          <div class="molecule-selector-bar">
+            <button class="mol-pill-btn active" id="btn-show-water" data-geom="H2O">💧 H₂O (კუთხური, 104.5°)</button>
+            <button class="mol-pill-btn" id="btn-show-co2" data-geom="CO2">🫧 CO₂ (ხაზოვანი, 180°)</button>
+            <button class="mol-pill-btn" id="btn-show-nh3" data-geom="NH3">🧪 NH₃ (პირამიდული, 107°)</button>
+          </div>
+
+          <!-- Polarity Canvas with Vector Arrows -->
+          <div class="polarity-canvas-box">
+            <canvas id="polarity-canvas" width="600" height="320"></canvas>
+          </div>
+
+          <!-- Vector Explanation Callout -->
+          <div class="pedagogy-card" style="margin-top: 1rem;">
+            <div class="pedagogy-header">
+              <span>🎯 დიპოლური მომენტის ვექტორული ჯამი (μ)</span>
+            </div>
+            <div class="pedagogy-body" id="polarity-vector-desc">
+              წყლის მოლეკულაში ჟანგბადის ორი გაუზიარებელი ელექტრონული წყვილის გამო გეომეტრია არის <strong>კუთხური (~104.5°)</strong>. ორივე O-H ბმის დიპოლური ვექტორი მიმართულია ჟანგბადისკენ. მათი ვექტორული ჯამი არ უდრის ნულს (<strong>μ = 1.85 D</strong>), ამიტომ წყალი <strong>ძლიერ პოლარული</strong> მოლეკულაა და უნივერსალური გამხსნელია!
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         MODULE 3: კრისტალური მესრები და ნივთიერების თვისებები
+         ======================================================== -->
+    <section id="module-lattices" class="module-view">
+      
+      <div class="glass-panel">
+        
+        <!-- Lattice Type Switcher -->
+        <div class="lattice-type-tabs" role="tablist">
+          <div class="lattice-tab-btn active" data-lattice="ionic">
+            <div class="title">🧂 იონური მესერი</div>
+            <div class="example">მაგ. NaCl (სუფრის მარილი)</div>
+          </div>
+          <div class="lattice-tab-btn" data-lattice="atomic">
+            <div class="title">💎 ატომური მესერი</div>
+            <div class="example">მაგ. ალმასი (C), SiO₂ (კვარცი)</div>
+          </div>
+          <div class="lattice-tab-btn" data-lattice="molecular">
+            <div class="title">❄️ მოლეკულური მესერი</div>
+            <div class="example">მაგ. ყინული (H₂O), იოდი (I₂)</div>
+          </div>
+          <div class="lattice-tab-btn" data-lattice="metallic">
+            <div class="title">🔩 მეტალური მესერი</div>
+            <div class="example">მაგ. რკინა (Fe), სპილენძი (Cu)</div>
+          </div>
+        </div>
+
+        <!-- Simulation Interactive Stage -->
+        <div class="lattice-canvas-container">
+          <canvas id="lattice-canvas" width="1100" height="400"></canvas>
+        </div>
+
+        <!-- Stress and Heat Testing Dashboard -->
+        <div class="stress-controls">
+          
+          <!-- Stress Test -->
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <button class="btn-hammer" id="btn-apply-force">
+              <span>🔨 მექანიკური დარტყმა (Stress Test)</span>
+            </button>
+            <button class="btn-secondary" id="btn-reset-lattice">
+              <span>🔄 აღდგენა</span>
+            </button>
+          </div>
+
+          <!-- Heat / Temperature Slider -->
+          <div class="control-slider-group" style="max-width: 450px;">
+            <label for="temp-slider">🔥 ტემპერატურა: <strong id="temp-display" style="color: #fb923c; font-family: 'JetBrains Mono';">25 °C</strong></label>
+            <input type="range" id="temp-slider" min="0" max="1600" value="25" step="25">
+          </div>
+
+        </div>
+
+        <!-- Live Scientific Explanation of Phenomenon -->
+        <div class="pedagogy-card" style="margin-top: 1.25rem;">
+          <div class="pedagogy-header">
+            <span id="lattice-desc-title">🧂 იონური კრისტალის ქცევა მექანიკური დარტყმისა და გაცხელებისას</span>
+          </div>
+          <div class="pedagogy-body" id="lattice-desc-body">
+            იონურ კრისტალში კათიონები (Na⁺) და ანიონები (Cl⁻) მკაცრად ენაცვლება ერთმანეთს. 
+            მექანიკური დარტყმის დროს იონთა ერთი ფენა გადაადგილდება მეორის მიმართ, რის შედეგადაც ერთსახელიანი მუხტები (+ და +, - და -) აღმოჩნდება ერთმანეთის პირისპირ. 
+            უეცარი ელექტროსტატიკური განზიდვის ძალა ამსხვრევს კრისტალს — სწორედ ეს განსაზღვრავს იონური ნაერთების <strong>სიმყიფეს (Brittle)</strong>!
+          </div>
+        </div>
+
+        <!-- Comparative Lattice Matrix Table -->
+        <table class="properties-comparison-table" aria-label="კრისტალური მესრების შედარებითი დახასიათება">
+          <thead>
+            <tr>
+              <th>მესრის ტიპი</th>
+              <th>კვანძებში არსებული ნაწილაკები</th>
+              <th>ბმის ბუნება</th>
+              <th>დნობის ტემპერატურა</th>
+              <th>მექანიკური თვისება</th>
+              <th>ელექტროგამტარობა</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color: var(--ionic-color);">იონური</strong></td>
+              <td>დადებითი და უარყოფითი იონები (კათიონები, ანიონები)</td>
+              <td>ელექტროსტატიკური მიზიდვა</td>
+              <td>მაღალი (მაგ. NaCl: 801 °C)</td>
+              <td>მყიფე (იმსხვრევა დარტყმისას)</td>
+              <td>მყარში — დიელექტრიკი; ნადნობში და ხსნარში — გამტარი</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--covalent-polar);">ატომური</strong></td>
+              <td>ნეიტრალური ატომები</td>
+              <td>ძლიერი კოვალენტური ბმების 3D ქსელი</td>
+              <td>ძალიან მაღალი (ალმასი > 3500 °C)</td>
+              <td>უმაღლესი სიმაგრე (არ იმსხვრევა ადვილად)</td>
+              <td>დიელექტრიკი (გამონაკლისია გრაფიტი)</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--covalent-nonpolar);">მოლეკულური</strong></td>
+              <td>არაპოლარული ან პოლარული მოლეკულები</td>
+              <td>სუსტი მოლეკულათშორისი ძალები (ვან-დერ-ვაალსი)</td>
+              <td>დაბალი (ყინული: 0 °C, იოდი სუბლიმირდება)</td>
+              <td>რბილი, ადვილად დეფორმირებადი</td>
+              <td>დიელექტრიკი</td>
+            </tr>
+            <tr>
+              <td><strong style="color: var(--metallic-color);">მეტალური</strong></td>
+              <td>მეტალის იონები და ნეიტრალური ატომები</td>
+              <td>დელოკალიზებული "ელექტრონული ზღვა"</td>
+              <td>საშუალოდან ძალიან მაღალამდე (Fe: 1538 °C)</td>
+              <td>ჭედადი და პლასტიკური (დეფორმირდება დამსხვრევის გარეშე)</td>
+              <td>მაღალი ელექტრო- და თბოგამტარობა</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================
+         MODULE 4: ინტერაქტიული სავარჯიშოები და ქეისები (Quiz)
+         ======================================================== -->
+    <section id="module-quiz" class="module-view">
+      
+      <div class="glass-panel">
+        
+        <!-- Quiz Control Bar -->
+        <div class="quiz-header-bar">
+          <div>
+            <div class="panel-title">📝 ფორმაციული შეფასება და ქეისები</div>
+            <div class="panel-subtitle">შეამოწმეთ ცოდნა ეროვნული სასწავლო გეგმის სტანდარტების მიხედვით</div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <!-- Grade Filter -->
+            <div class="quiz-filter-group">
+              <button class="quiz-filter-btn active" data-filter="all">ყველა (8)</button>
+              <button class="quiz-filter-btn" data-filter="grade9">IX კლასი (საბაზო)</button>
+              <button class="quiz-filter-btn" data-filter="grade10">X–XI კლასი (გაღრმავებული)</button>
+            </div>
+
+            <!-- Score Display -->
+            <div class="quiz-score-display">
+              <span>შედეგი:</span>
+              <strong id="quiz-score-num">0 / 8</strong>
+            </div>
+
+            <button class="btn-secondary" id="btn-reset-quiz" style="font-size: 0.78rem;">
+              <span>🔄 თავიდან დაწყება</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Questions Dynamic Container -->
+        <div id="quiz-questions-list">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL 1: PERIODIC TABLE REFERENCE ================= -->
+  <div class="modal-overlay" id="modal-ptable" role="dialog" aria-modal="true" aria-labelledby="ptable-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="ptable-title">📊 პერიოდული სისტემის ცნობარი (ესგ ქიმია)</div>
+        <button class="modal-close-btn" data-close="modal-ptable" aria-label="დახურვა">&times;</button>
+      </div>
+      <div>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          პოლინგის ელექტროუარყოფითობის სკალა და ძირითადი ელემენტების ელექტრონული აღნაგობა:
+        </p>
+        <div id="ptable-modal-content" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: LAB SAFETY & ETHICS ================= -->
+  <div class="modal-overlay" id="modal-safety" role="dialog" aria-modal="true" aria-labelledby="safety-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="safety-title">🛡️ უსაფრთხოების წესები და ეთიკური სტანდარტები</div>
+        <button class="modal-close-btn" data-close="modal-safety" aria-label="დახურვა">&times;</button>
+      </div>
+      <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 1rem;">
+        
+        <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-emerald); padding: 0.85rem; border-radius: var(--radius-sm);">
+          <strong style="color: #6ee7b7;">🔒 არასრულწლოვანთა პერსონალური მონაცემების დაცვა:</strong><br>
+          ეს აპლიკაცია მკაცრად იცავს მოსწავლეთა კონფიდენციალურობას. სისტემა არ საჭიროებს რეგისტრაციას, ელ-ფოსტის ან სახელის შეყვანას. არცერთი მონაცემი არ იგზავნება გარე სერვერებზე. ყველა პროგრესი ინახება ექსკლუზიურად ბრაუზერის ლოკალურ სესიაში.
+        </div>
+
+        <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--accent-amber); padding: 0.85rem; border-radius: var(--radius-sm);">
+          <strong style="color: #fde68a;">⚠️ რეალურ ლაბორატორიაში მუშაობის წესები:</strong><br>
+          <ul style="margin-left: 1.25rem; margin-top: 0.4rem;">
+            <li>ტუტე მეტალებთან (Na, K) მუშაობა წყლისა და ტენისგან სრულად იზოლირებულ გარემოში, ნავთის ფენის ქვეშ.</li>
+            <li>ქლორის (Cl₂) და სხვა ტოქსიკური აირების მიღება და მათთან რეაქციები მხოლოდ გამწოვ კარადაში!</li>
+            <li>თვალის დამცავი სათვალე და რეზინის ხელთათმანები სავალდებულოა ნებისმიერი ეგზოთერმული რეაქციისას.</li>
+          </ul>
+        </div>
+
+        <div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--accent-blue); padding: 0.85rem; border-radius: var(--radius-sm);">
+          <strong style="color: #93c5fd;">📖 აკადემიური კეთილსინდისიერება:</strong><br>
+          სავარჯიშოების ამოხსნისას გამოიყენეთ "მინიშნების" ღილაკი ცნებების გასააზრებლად და არა მექანიკური გამოცნობისთვის.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div class="privacy-badge">
+        <span>🛡️ 100% ლოკალური & უსაფრთხო სესია — მონაცემები არ გროვდება</span>
+      </div>
+      <p>
+        <strong>ქიმიური ბმები და ნივთიერებათა აღნაგობა</strong> — შექმნილია საქართველოს ეროვნული სასწავლო გეგმის (ესგ) მოთხოვნათა შესაბამისად.
+      </p>
+      <p class="footer-disclaimer">
+        აპლიკაცია განკუთვნილია საგანმანათლებლო მიზნებისთვის. ქიმიური ანიმაციები ასახავს სუბ-მიკროსკოპული პროცესების პედაგოგიურ მოდელებს და ემსახურება აბსტრაქტული ცნებების სივრცით აღქმას.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Core Chemistry & UI Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
